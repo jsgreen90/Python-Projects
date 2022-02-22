@@ -1,3 +1,4 @@
+#Scrape Indeed using beautifulsoup for remote threat intelligence jobs
 import requests
 import bs4
 from bs4 import BeautifulSoup
