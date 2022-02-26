@@ -75,7 +75,7 @@ print ("Memory allocated => {0:X}", hex(remote_memory))
 write = WriteProcessMemory(handle, remote_memory, dll, len(dll) + 1, None)
 
 if not write:
-    raise WinError():
+    raise WinError()
 
 print("Bytes written => {}".format(dll))
 
