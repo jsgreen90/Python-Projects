@@ -1,5 +1,4 @@
-# Remote DLL Injection
-# Credit goes to TCM Python 201 For Hackers Course
+# Remote DLL Injection - STILL TWEAKING
 # Can only load once, so if doing multiple times we will need to use different PIDs
 
 from ctypes import *
