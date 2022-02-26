@@ -87,3 +87,5 @@ print("LoadLibrary address => ", hex(load_lib))
 
 #create the remote thread
 rthread = CreateRemoteThread(handle, None, 0, load_lib, remote_memory, EXECUTE_IMMEDIATELY, None)
+
+# Now you should be able to see that the DLL was loaded either using powershell gps.modules or process hacker
